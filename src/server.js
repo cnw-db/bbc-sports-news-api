@@ -148,8 +148,12 @@ async function withCache(key, loader) {
   return value;
 }
 
+function listingUrlFor(category) {
+  return category === 'sport' ? `${BBC_ORIGIN}/sport` : `${BBC_ORIGIN}/sport/${category}`;
+}
+
 async function scrapeNews(category, limit = 10, includeContent = true) {
-  const listingUrl = `${BBC_ORIGIN}/sport/${category}`;
+  const listingUrl = listingUrlFor(category);
   const basicItems = await withCache(`listing:${category}:${limit}`, async () => {
     const html = await fetchHtml(listingUrl);
     return parseListing(html, category, limit);
@@ -191,7 +195,7 @@ async function newsHandler(req, res) {
     res.json({
       success: true,
       creator: CREATOR,
-      source: `${BBC_ORIGIN}/sport/${category}`,
+      source: listingUrlFor(category),
       category,
       fetchedAt: new Date().toISOString(),
       count: data.length,
