@@ -1,0 +1,8 @@
+name = "whiteshadow-bbc-sport-api"
+main = "src/worker.js"
+compatibility_date = "2026-08-29"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+CREATOR = "whiteshadow"
